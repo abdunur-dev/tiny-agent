@@ -1,0 +1,18 @@
+{
+  "name": "tiny-agent",
+  "version": "0.1.0",
+  "description": "Minimal, fast, terminal-based coding agent CLI in TypeScript running on Bun",
+  "type": "module",
+  "bin": {
+    "tiny-agent": "./src/index.ts"
+  },
+  "scripts": {
+    "start": "bun run src/index.ts",
+    "build": "bun build --compile --outfile dist/tiny-agent src/index.ts",
+    "test": "bun test"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "bun-types": "latest"
+  }
+}
