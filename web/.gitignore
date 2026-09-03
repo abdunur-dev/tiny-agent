@@ -1,9 +1,8 @@
 node_modules/
-dist/
 .next/
 out/
 build/
-*.exe
+dist/
 *.log
 .DS_Store
 .env*.local

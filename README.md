@@ -70,3 +70,15 @@ On first run, `tiny-agent` prompts you to pick your default provider and saves s
 }
 ```
 You can also set `GROQ_API_KEY` in your environment.
+
+## Web Documentation & Landing Page
+
+A Next.js (App Router) + Tailwind CSS web application modeled after `fx.sh` and `nextjs.org` lives in the `web/` directory.
+
+```bash
+cd web
+npm install
+npm run dev
+# Open http://localhost:3000
+```
+
