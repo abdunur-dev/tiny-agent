@@ -28,16 +28,16 @@ export function InstallSection() {
   };
 
   return (
-    <section className="py-20 sm:py-28 overflow-hidden border-b border-white/10">
-      <div className="mx-auto max-w-2xl px-4 sm:px-6 text-center">
+    <section className="py-24 sm:py-36 overflow-hidden border-b border-white/[0.08] w-full">
+      <div className="mx-auto max-w-3xl px-4 sm:px-8 text-center">
         
         <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-mono border border-white/10 bg-white/[0.02] text-white/50 uppercase tracking-wider mb-4">
           Install
         </div>
-        <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-white mb-3">
+        <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white mb-3 font-sans">
           Start coding in seconds
         </h2>
-        <p className="text-white/50 text-sm mb-8 leading-relaxed">
+        <p className="text-neutral-400 text-sm sm:text-base mb-10 leading-relaxed max-w-lg mx-auto">
           Clone the repository, install dependencies with Bun, and run or compile directly.
         </p>
 

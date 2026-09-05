@@ -3,16 +3,16 @@ import { ArrowUpRight, Zap, Shield, Cpu } from "lucide-react";
 
 export function TechStack() {
   return (
-    <section id="tooling" className="py-24 border-b border-white/[0.08] bg-black overflow-hidden relative">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+    <section id="tooling" className="py-24 sm:py-36 border-b border-white/[0.08] bg-black overflow-hidden relative w-full">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12">
         
         {/* Title */}
-        <div className="text-center mb-16">
-          <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-white mb-3">
+        <div className="text-center mb-16 sm:mb-20">
+          <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white mb-3 font-sans">
             Built on a foundation of fast,{" "}
             <span className="block sm:inline">production-grade tooling</span>
           </h2>
-          <p className="text-neutral-400 text-sm max-w-lg mx-auto">
+          <p className="text-neutral-400 text-sm sm:text-base max-w-xl mx-auto">
             Combining the speed of Bun's native bundler with private local models and ultra-fast cloud inference.
           </p>
         </div>

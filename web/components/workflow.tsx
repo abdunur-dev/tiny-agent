@@ -21,14 +21,14 @@ export function Workflow() {
   ];
 
   return (
-    <section className="py-20 sm:py-28 border-b border-white/10">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+    <section className="py-24 sm:py-32 border-b border-white/[0.08] w-full">
+      <div className="mx-auto max-w-7xl px-4 sm:px-8 lg:px-12">
         
-        <div className="text-center mb-16">
+        <div className="text-center mb-16 sm:mb-20">
           <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-mono border border-white/10 bg-white/[0.02] text-white/50 uppercase tracking-wider mb-4">
             Workflow
           </div>
-          <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-white mb-3">
+          <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white mb-3 font-sans">
             How it works
           </h2>
           <p className="text-white/50 text-sm max-w-md mx-auto leading-relaxed">
@@ -36,7 +36,7 @@ export function Workflow() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
           {steps.map((step) => (
             <div
               key={step.num}

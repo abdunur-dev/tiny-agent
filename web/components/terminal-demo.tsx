@@ -72,18 +72,18 @@ export function TerminalDemo() {
   }, [typedText, step, activeScenario]);
 
   return (
-    <section id="demo" className="py-20 sm:py-28 border-b border-white/10">
-      <div className="mx-auto max-w-5xl px-4 sm:px-6">
+    <section id="demo" className="py-24 sm:py-36 border-b border-white/[0.08] w-full bg-black">
+      <div className="mx-auto max-w-6xl px-4 sm:px-8 lg:px-12">
         
         {/* Header */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-14 sm:mb-18">
           <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-mono border border-white/10 bg-white/[0.02] text-white/50 uppercase tracking-wider mb-4">
             Interactive Simulator
           </div>
-          <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-white mb-3">
+          <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white mb-3 font-sans">
             See tiny-agent in action
           </h2>
-          <p className="text-white/50 text-sm max-w-md mx-auto leading-relaxed">
+          <p className="text-neutral-400 text-sm sm:text-base max-w-lg mx-auto leading-relaxed">
             Select a scenario below to watch tiny-agent execute commands, invoke tools, and stream responses.
           </p>
         </div>

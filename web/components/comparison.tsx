@@ -42,18 +42,18 @@ export function Comparison() {
   ];
 
   return (
-    <section id="compare" className="py-20 sm:py-28 border-b border-white/10 bg-white/[0.01]">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6">
+    <section id="compare" className="py-24 sm:py-36 border-b border-white/[0.08] bg-white/[0.01] w-full">
+      <div className="max-w-6xl mx-auto px-4 sm:px-8 lg:px-12">
         
         {/* Header */}
-        <div className="text-center mb-14">
+        <div className="text-center mb-16 sm:mb-20">
           <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-mono border border-white/10 bg-white/[0.02] text-white/50 uppercase tracking-wider mb-4">
             Comparison
           </div>
-          <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-white mb-3 font-sans">
+          <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white mb-3 font-sans">
             tiny-agent vs fx.sh
           </h2>
-          <p className="text-white/50 text-sm max-w-lg mx-auto leading-relaxed">
+          <p className="text-neutral-400 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
             An honest look at what each tool actually does today — no invented benchmarks or marketing fluff.
           </p>
         </div>

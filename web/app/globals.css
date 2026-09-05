@@ -109,3 +109,41 @@ body {
   animation: pulseGlow 4s ease-in-out infinite;
 }
 
+@keyframes beamHorizontal {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(200%);
+  }
+}
+
+@keyframes beamVertical {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(200%);
+  }
+}
+
+.animate-beam-h {
+  animation: beamHorizontal 5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.animate-beam-v {
+  animation: beamVertical 6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.vercel-grid-cross {
+  position: absolute;
+  color: rgba(255, 255, 255, 0.3);
+  font-family: ui-monospace, SFMono-Regular, monospace;
+  font-size: 13px;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+  z-index: 10;
+}
+
+
