@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { RotateCcw } from "lucide-react";
 
 interface Scenario {
@@ -10,6 +10,7 @@ interface Scenario {
   provider: string;
   toolAction: string;
   autoResolve?: string;
+  hasConfirmation: boolean;
   confirmationPrompt?: string;
   output: string;
 }
@@ -21,6 +22,7 @@ const SCENARIOS: Scenario[] = [
     command: 'tiny-agent "change the server port to 8080 in src/config.ts"',
     provider: "ollama / qwen2.5-coder:latest",
     toolAction: "⚡ edit_file src/config.ts",
+    hasConfirmation: true,
     confirmationPrompt: "Proceed? (y/n): ",
     output: "✓ Successfully replaced 'port = 3000' with 'port = 8080' in src/config.ts.",
   },
@@ -30,6 +32,7 @@ const SCENARIOS: Scenario[] = [
     command: 'tiny-agent "execute full test suite in bun"',
     provider: "groq / openai/gpt-oss-120b",
     toolAction: "⚡ run_shell_command cmd /c bun test",
+    hasConfirmation: true,
     confirmationPrompt: "Proceed? (y/n): ",
     output: "33 pass, 0 fail (131 expect calls) [1.09s]\nAll unit, model, and MCP tests passed.",
   },
@@ -40,44 +43,102 @@ const SCENARIOS: Scenario[] = [
     provider: "ollama / qwen2.5-coder:latest",
     toolAction: "↳ read_file package.json",
     autoResolve: "↳ auto-resolved 'package.json' → './package.json'",
+    hasConfirmation: false,
     output: "Standalone CLI with zero framework bloat. Standard dependencies: @modelcontextprotocol/sdk.",
   },
 ];
 
+// Animation step constants
+const STEP_TYPING = 0;
+const STEP_TYPED_PAUSE = 1;
+const STEP_WORKING = 2;
+const STEP_TOOL_CALLED = 3;
+const STEP_CONFIRMING = 4;
+const STEP_CONFIRMED = 5;
+const STEP_FINISHED = 6;
+
 export function TerminalDemo() {
   const [activeScenario, setActiveScenario] = useState<Scenario>(SCENARIOS[0]);
   const [typedText, setTypedText] = useState("");
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(STEP_TYPING);
+  const [replayCount, setReplayCount] = useState(0);
+  const activeTimerRef = useRef<NodeJS.Timeout | null>(null);
 
-  useEffect(() => {
+  // Triggered when scenario changes or manual replay is clicked
+  const handleSelectScenario = (sc: Scenario) => {
+    if (sc.id === activeScenario.id) {
+      handleReplay();
+      return;
+    }
+    if (activeTimerRef.current) clearTimeout(activeTimerRef.current);
+    setActiveScenario(sc);
     setTypedText("");
-    setStep(0);
-  }, [activeScenario]);
+    setStep(STEP_TYPING);
+    setReplayCount((c) => c + 1);
+  };
 
+  const handleReplay = () => {
+    if (activeTimerRef.current) clearTimeout(activeTimerRef.current);
+    setTypedText("");
+    setStep(STEP_TYPING);
+    setReplayCount((c) => c + 1);
+  };
+
+  // Typing effect loop
   useEffect(() => {
-    let timeout: NodeJS.Timeout;
-
-    if (step === 0) {
+    if (step === STEP_TYPING) {
       if (typedText.length < activeScenario.command.length) {
-        timeout = setTimeout(() => {
+        activeTimerRef.current = setTimeout(() => {
           setTypedText(activeScenario.command.slice(0, typedText.length + 1));
-        }, 28);
+        }, 32);
       } else {
-        timeout = setTimeout(() => setStep(1), 350);
+        // Natural pause right after user finishes typing
+        activeTimerRef.current = setTimeout(() => {
+          setStep(STEP_TYPED_PAUSE);
+        }, 220);
       }
-    } else if (step === 1) {
-      timeout = setTimeout(() => setStep(2), 500);
-    } else if (step === 2) {
-      timeout = setTimeout(() => setStep(3), 600);
+    } else if (step === STEP_TYPED_PAUSE) {
+      // Transition to working state
+      activeTimerRef.current = setTimeout(() => {
+        setStep(STEP_WORKING);
+      }, 200);
+    } else if (step === STEP_WORKING) {
+      // Brief pulsing "working..." indicator (500ms pause per specs)
+      activeTimerRef.current = setTimeout(() => {
+        setStep(STEP_TOOL_CALLED);
+      }, 500);
+    } else if (step === STEP_TOOL_CALLED) {
+      if (activeScenario.hasConfirmation) {
+        // Pause before showing confirmation prompt
+        activeTimerRef.current = setTimeout(() => {
+          setStep(STEP_CONFIRMING);
+        }, 400);
+      } else {
+        // For read-only tools: execute immediately without confirmation
+        activeTimerRef.current = setTimeout(() => {
+          setStep(STEP_FINISHED);
+        }, 450);
+      }
+    } else if (step === STEP_CONFIRMING) {
+      // Brief pause then approve with "y"
+      activeTimerRef.current = setTimeout(() => {
+        setStep(STEP_CONFIRMED);
+      }, 380);
+    } else if (step === STEP_CONFIRMED) {
+      // Pause then show output
+      activeTimerRef.current = setTimeout(() => {
+        setStep(STEP_FINISHED);
+      }, 320);
     }
 
-    return () => clearTimeout(timeout);
-  }, [typedText, step, activeScenario]);
+    return () => {
+      if (activeTimerRef.current) clearTimeout(activeTimerRef.current);
+    };
+  }, [typedText, step, activeScenario, replayCount]);
 
   return (
     <section id="demo" className="py-20 sm:py-28 border-b border-[#262626] w-full bg-[#0A0A0A]">
       <div className="max-w-5xl mx-auto px-4 sm:px-6">
-        
         {/* Header */}
         <div className="text-left md:text-center mb-12 sm:mb-16">
           <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#FAFAFA] mb-3">
@@ -88,12 +149,12 @@ export function TerminalDemo() {
           </p>
         </div>
 
-        {/* Scenario Controls - Sharp hairline borders, no rounded corners */}
+        {/* Scenario Controls */}
         <div className="flex items-center gap-2 mb-3 overflow-x-auto pb-1">
           {SCENARIOS.map((sc) => (
             <button
               key={sc.id}
-              onClick={() => setActiveScenario(sc)}
+              onClick={() => handleSelectScenario(sc)}
               className={`px-3 py-1.5 text-xs font-mono border transition-colors whitespace-nowrap ${
                 activeScenario.id === sc.id
                   ? "border-[#FAFAFA] bg-[#FAFAFA] text-[#0A0A0A] font-semibold"
@@ -104,10 +165,7 @@ export function TerminalDemo() {
             </button>
           ))}
           <button
-            onClick={() => {
-              setTypedText("");
-              setStep(0);
-            }}
+            onClick={handleReplay}
             className="px-2.5 py-1.5 text-xs font-mono border border-[#262626] bg-[#0A0A0A] text-[#737373] hover:text-[#FAFAFA] hover:border-[#404040] transition-colors"
             title="Replay scenario"
           >
@@ -115,10 +173,9 @@ export function TerminalDemo() {
           </button>
         </div>
 
-        {/* Terminal Window - Sharp 1px #262626 border, #0A0A0A bg, no drop shadows */}
+        {/* Terminal Window */}
         <div className="border border-[#262626] bg-[#0A0A0A] font-mono text-xs overflow-hidden">
-          
-          {/* Minimalist Terminal Title Bar */}
+          {/* Title Bar */}
           <div className="flex items-center justify-between border-b border-[#262626] px-4 py-2 bg-[#121212]">
             <div className="flex items-center gap-2 text-xs font-mono text-[#737373]">
               <span className="text-[#FAFAFA] font-semibold">tiny-agent</span>
@@ -130,22 +187,29 @@ export function TerminalDemo() {
             </div>
           </div>
 
-          {/* Terminal Viewport */}
+          {/* Viewport */}
           <div className="p-5 space-y-3 min-h-[220px] leading-relaxed select-text font-mono">
-            {/* Input line with blinking bold yellow cursor */}
+            {/* Command input line */}
             <div className="flex items-start gap-2">
               <span className="text-[#737373] select-none font-bold">$</span>
               <span className="text-[#FAFAFA]">
                 {typedText}
-                {step === 0 && (
+                {step <= STEP_TYPED_PAUSE && (
                   <span className="inline-block w-2 h-4 bg-[#FFD60A] ml-1 align-middle animate-terminal-cursor" />
                 )}
               </span>
             </div>
 
-            {/* Provider line and tool invocation */}
-            {step >= 1 && (
-              <div className="text-[#737373] space-y-1 pt-1">
+            {/* Pulsing working indicator (400-600ms natural pause) */}
+            {step === STEP_WORKING && (
+              <div className="text-xs text-[#737373] animate-working-pulse pt-1">
+                [tiny-agent] querying model...
+              </div>
+            )}
+
+            {/* Tool invocation and provider line */}
+            {step >= STEP_TOOL_CALLED && (
+              <div className="text-[#737373] space-y-1 pt-1 animate-terminal-fade-in">
                 <div>[tiny-agent] provider={activeScenario.provider}</div>
                 <div className="text-[#FAFAFA] font-medium">{activeScenario.toolAction}</div>
                 {activeScenario.autoResolve && (
@@ -155,25 +219,27 @@ export function TerminalDemo() {
             )}
 
             {/* Deliberate Accent Moment: Proceed? (y/n) confirmation prompt in #FFD60A */}
-            {step >= 2 && activeScenario.confirmationPrompt && (
-              <div className="pt-1 text-xs">
+            {step >= STEP_CONFIRMING && activeScenario.hasConfirmation && (
+              <div className="pt-1 text-xs animate-terminal-fade-in">
                 <span className="text-[#FFD60A] font-bold">
                   {activeScenario.confirmationPrompt}
                 </span>
-                <span className="text-[#FAFAFA] font-bold">y</span>
+                {step >= STEP_CONFIRMED ? (
+                  <span className="text-[#FAFAFA] font-bold">y</span>
+                ) : (
+                  <span className="inline-block w-2 h-4 bg-[#FFD60A] ml-1 align-middle animate-terminal-cursor" />
+                )}
               </div>
             )}
 
-            {/* Execution Result */}
-            {step >= 3 && (
-              <div className="text-[#FAFAFA] pt-2 border-t border-[#262626] whitespace-pre-line text-xs leading-relaxed">
+            {/* Execution Result - Smooth fade in */}
+            {step >= STEP_FINISHED && (
+              <div className="text-[#FAFAFA] pt-2 border-t border-[#262626] whitespace-pre-line text-xs leading-relaxed animate-terminal-fade-in">
                 {activeScenario.output}
               </div>
             )}
           </div>
-
         </div>
-
       </div>
     </section>
   );
