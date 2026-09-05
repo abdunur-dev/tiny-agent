@@ -44,23 +44,10 @@ const config: Config = {
         input: "#262626",
         ring: "#FAFAFA",
       },
-      borderRadius: {
-        none: "0px",
-        sm: "0px",
-        md: "0px",
-        lg: "0px",
-        xl: "0px",
-        "2xl": "0px",
-        "3xl": "0px",
-        full: "0px",
-      },
       fontFamily: {
         sans: ["var(--font-inter)", "-apple-system", "BlinkMacSystemFont", "sans-serif"],
         heading: ["var(--font-space-grotesk)", "sans-serif"],
         mono: ["var(--font-ibm-plex-mono)", "ui-monospace", "monospace"],
-      },
-      boxShadow: {
-        none: "none",
       },
     },
   },

@@ -23,31 +23,37 @@ export function Comparison() {
   ];
 
   return (
-    <section id="compare" className="py-20 sm:py-28 border-b border-[#262626] bg-[#0A0A0A] w-full">
+    <section id="compare" className="py-20 sm:py-28 border-b border-white/[0.08] bg-[#0A0A0A] w-full relative overflow-hidden">
+      {/* Linear Ambient Radial */}
+      <div className="absolute top-0 right-1/4 w-[600px] h-[350px] bg-gradient-to-b from-white/[0.02] to-transparent blur-3xl pointer-events-none -z-10" />
+
       <div className="max-w-5xl mx-auto px-4 sm:px-6">
         {/* Headline-led header */}
         <div className="mb-12 sm:mb-16">
+          <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full border border-white/10 bg-white/[0.03] text-[11px] font-mono text-[#8A8F98] mb-3">
+            <span>differentiation</span>
+          </div>
           <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#FAFAFA] mb-4">
             What fx doesn't do yet
           </h2>
-          <p className="text-[#737373] text-sm sm:text-base max-w-2xl leading-relaxed">
+          <p className="text-[#8A8F98] text-sm sm:text-base max-w-2xl leading-relaxed">
             Both tools share a minimal Unix ethos with zero framework bloat. Here is how their capabilities differ today based on verifiable code.
           </p>
         </div>
 
-        {/* 3 Focused Comparison Cards */}
+        {/* 3 Focused Linear Bento Comparison Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {cards.map((card) => (
             <div
               key={card.title}
-              className="border border-[#262626] bg-[#0A0A0A] p-6 flex flex-col justify-between space-y-6"
+              className="rounded-2xl linear-card p-6 sm:p-7 flex flex-col justify-between space-y-6"
             >
               {/* Card Header */}
               <div>
                 <h3 className="font-heading text-lg sm:text-xl font-bold text-[#FAFAFA] tracking-tight">
                   {card.title}
                 </h3>
-                <p className="font-mono text-[11px] text-[#737373] mt-1">
+                <p className="font-mono text-[11px] text-[#8A8F98] mt-1">
                   {card.subtitle}
                 </p>
               </div>
@@ -55,27 +61,27 @@ export function Comparison() {
               {/* Card Body: fx vs tiny-agent */}
               <div className="space-y-4 pt-2">
                 {/* fx block */}
-                <div className="border-t border-[#262626] pt-3.5">
+                <div className="border-t border-white/[0.06] pt-3.5">
                   <div className="flex items-center justify-between mb-1.5">
-                    <span className="font-mono text-[11px] text-[#737373] uppercase tracking-wider">
+                    <span className="font-mono text-[11px] text-[#8A8F98] uppercase tracking-wider">
                       fx.sh
                     </span>
-                    <span className="font-mono text-[10px] text-[#737373]">
+                    <span className="font-mono text-[10px] text-[#737373] bg-white/[0.02] border border-white/[0.06] px-2 py-0.5 rounded-full">
                       unsupported
                     </span>
                   </div>
-                  <p className="text-xs text-[#737373] leading-relaxed">
+                  <p className="text-xs text-[#8A8F98] leading-relaxed">
                     {card.fx}
                   </p>
                 </div>
 
                 {/* tiny-agent block */}
-                <div className="border-t border-[#262626] pt-3.5">
+                <div className="border-t border-white/[0.06] pt-3.5">
                   <div className="flex items-center justify-between mb-1.5">
                     <span className="font-mono text-[11px] text-[#FAFAFA] font-semibold uppercase tracking-wider">
                       tiny-agent
                     </span>
-                    <span className="font-mono text-[10px] text-[#FAFAFA]">
+                    <span className="font-mono text-[10px] text-emerald-400 bg-emerald-950/30 border border-emerald-800/40 px-2 py-0.5 rounded-full">
                       supported
                     </span>
                   </div>
@@ -88,7 +94,7 @@ export function Comparison() {
           ))}
         </div>
 
-        <div className="mt-8 text-xs text-[#737373] font-mono">
+        <div className="mt-8 text-xs text-[#8A8F98] font-mono">
           Factual comparison verified against current repositories.
         </div>
       </div>

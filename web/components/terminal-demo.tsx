@@ -137,28 +137,34 @@ export function TerminalDemo() {
   }, [typedText, step, activeScenario, replayCount]);
 
   return (
-    <section id="demo" className="py-20 sm:py-28 border-b border-[#262626] w-full bg-[#0A0A0A]">
+    <section id="demo" className="py-20 sm:py-28 border-b border-white/[0.08] w-full bg-[#0A0A0A] relative overflow-hidden">
+      {/* Linear Ambient Radial */}
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-gradient-to-b from-white/[0.03] to-transparent blur-3xl pointer-events-none -z-10" />
+
       <div className="max-w-5xl mx-auto px-4 sm:px-6">
         {/* Header */}
         <div className="text-left md:text-center mb-12 sm:mb-16">
+          <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full border border-white/10 bg-white/[0.03] text-[11px] font-mono text-[#8A8F98] mb-3">
+            <span>live simulator</span>
+          </div>
           <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#FAFAFA] mb-3">
             Interactive terminal simulator
           </h2>
-          <p className="text-[#737373] text-sm sm:text-base max-w-lg mx-auto leading-relaxed">
+          <p className="text-[#8A8F98] text-sm sm:text-base max-w-lg mx-auto leading-relaxed">
             Watch tiny-agent resolve paths, request tool approval, and stream answers without bloated abstraction layers.
           </p>
         </div>
 
         {/* Scenario Controls */}
-        <div className="flex items-center gap-2 mb-3 overflow-x-auto pb-1">
+        <div className="flex items-center gap-2 mb-3.5 overflow-x-auto pb-1">
           {SCENARIOS.map((sc) => (
             <button
               key={sc.id}
               onClick={() => handleSelectScenario(sc)}
-              className={`px-3 py-1.5 text-xs font-mono border transition-colors whitespace-nowrap ${
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-mono transition-all whitespace-nowrap ${
                 activeScenario.id === sc.id
-                  ? "border-[#FAFAFA] bg-[#FAFAFA] text-[#0A0A0A] font-semibold"
-                  : "border-[#262626] bg-[#0A0A0A] text-[#737373] hover:text-[#FAFAFA] hover:border-[#404040]"
+                  ? "bg-white text-[#0A0A0A] font-semibold shadow-[0_1px_8px_rgba(255,255,255,0.2)]"
+                  : "border border-white/10 bg-white/[0.03] text-[#8A8F98] hover:text-[#FAFAFA] hover:bg-white/[0.07] hover:border-white/20"
               }`}
             >
               {sc.name}
@@ -166,23 +172,28 @@ export function TerminalDemo() {
           ))}
           <button
             onClick={handleReplay}
-            className="px-2.5 py-1.5 text-xs font-mono border border-[#262626] bg-[#0A0A0A] text-[#737373] hover:text-[#FAFAFA] hover:border-[#404040] transition-colors"
+            className="p-1.5 rounded-lg border border-white/10 bg-white/[0.03] text-[#8A8F98] hover:text-[#FAFAFA] hover:border-white/20 hover:bg-white/[0.07] transition-all"
             title="Replay scenario"
           >
-            <RotateCcw className="w-3.5 h-3.5" />
+            <RotateCcw className="w-4 h-4" />
           </button>
         </div>
 
-        {/* Terminal Window */}
-        <div className="border border-[#262626] bg-[#0A0A0A] font-mono text-xs overflow-hidden">
-          {/* Title Bar */}
-          <div className="flex items-center justify-between border-b border-[#262626] px-4 py-2 bg-[#121212]">
-            <div className="flex items-center gap-2 text-xs font-mono text-[#737373]">
-              <span className="text-[#FAFAFA] font-semibold">tiny-agent</span>
+        {/* Terminal Window - Linear Glassmorphism */}
+        <div className="rounded-2xl border border-white/10 bg-[#0C0D12]/90 backdrop-blur-xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_20px_50px_-20px_rgba(0,0,0,0.7)] font-mono text-xs overflow-hidden">
+          {/* Title Bar with minimal macOS/Linear dots */}
+          <div className="flex items-center justify-between border-b border-white/[0.08] px-4 py-2.5 bg-white/[0.02]">
+            <div className="flex items-center gap-2 text-xs font-mono text-[#8A8F98]">
+              <div className="flex items-center gap-1.5 mr-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-white/15" />
+                <span className="w-2.5 h-2.5 rounded-full bg-white/15" />
+                <span className="w-2.5 h-2.5 rounded-full bg-white/15" />
+              </div>
+              <span className="text-[#FAFAFA] font-medium">tiny-agent</span>
               <span>·</span>
-              <span>interactive session</span>
+              <span>session</span>
             </div>
-            <div className="text-[11px] text-[#737373] hidden sm:block">
+            <div className="text-[11px] text-[#8A8F98] hidden sm:block">
               [{activeScenario.provider}]
             </div>
           </div>
@@ -191,7 +202,7 @@ export function TerminalDemo() {
           <div className="p-5 space-y-3 min-h-[220px] leading-relaxed select-text font-mono">
             {/* Command input line */}
             <div className="flex items-start gap-2">
-              <span className="text-[#737373] select-none font-bold">$</span>
+              <span className="text-[#8A8F98] select-none font-bold">$</span>
               <span className="text-[#FAFAFA]">
                 {typedText}
                 {step <= STEP_TYPED_PAUSE && (
@@ -202,18 +213,18 @@ export function TerminalDemo() {
 
             {/* Pulsing working indicator (400-600ms natural pause) */}
             {step === STEP_WORKING && (
-              <div className="text-xs text-[#737373] animate-working-pulse pt-1">
+              <div className="text-xs text-[#8A8F98] animate-working-pulse pt-1">
                 [tiny-agent] querying model...
               </div>
             )}
 
             {/* Tool invocation and provider line */}
             {step >= STEP_TOOL_CALLED && (
-              <div className="text-[#737373] space-y-1 pt-1 animate-terminal-fade-in">
+              <div className="text-[#8A8F98] space-y-1 pt-1 animate-terminal-fade-in">
                 <div>[tiny-agent] provider={activeScenario.provider}</div>
                 <div className="text-[#FAFAFA] font-medium">{activeScenario.toolAction}</div>
                 {activeScenario.autoResolve && (
-                  <div className="text-[#737373]">{activeScenario.autoResolve}</div>
+                  <div className="text-[#8A8F98]">{activeScenario.autoResolve}</div>
                 )}
               </div>
             )}
@@ -234,7 +245,7 @@ export function TerminalDemo() {
 
             {/* Execution Result - Smooth fade in */}
             {step >= STEP_FINISHED && (
-              <div className="text-[#FAFAFA] pt-2 border-t border-[#262626] whitespace-pre-line text-xs leading-relaxed animate-terminal-fade-in">
+              <div className="text-[#FAFAFA] pt-2 border-t border-white/[0.08] whitespace-pre-line text-xs leading-relaxed animate-terminal-fade-in">
                 {activeScenario.output}
               </div>
             )}
