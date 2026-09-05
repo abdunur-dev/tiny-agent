@@ -4,6 +4,7 @@ import { Features } from "@/components/features";
 import { TechStack } from "@/components/tech-stack";
 import { TerminalDemo } from "@/components/terminal-demo";
 import { Workflow } from "@/components/workflow";
+import { Comparison } from "@/components/comparison";
 import { InstallSection } from "@/components/install-section";
 import { Footer } from "@/components/footer";
 
@@ -16,6 +17,7 @@ export default function Home() {
         <Features />
         <TechStack />
         <TerminalDemo />
+        <Comparison />
         <Workflow />
         <InstallSection />
       </main>

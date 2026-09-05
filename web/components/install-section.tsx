@@ -4,18 +4,24 @@ import { useState } from "react";
 import { Check, Copy } from "lucide-react";
 
 export function InstallSection() {
-  const [tab, setTab] = useState<"bun" | "npm" | "binary">("bun");
+  const [tab, setTab] = useState<"clone" | "build" | "start">("clone");
   const [copied, setCopied] = useState(false);
 
   const commands = {
-    bun: "bun install -g tiny-agent",
-    npm: "npm install -g tiny-agent",
-    binary: "curl -fsSL https://tiny-agent.sh/install.sh | bash",
+    clone: "git clone https://github.com/abdunur-dev/tiny-agent && cd tiny-agent && bun install",
+    build: "bun run build",
+    start: "bun run start",
+  };
+
+  const copyCommands = {
+    clone: "git clone https://github.com/abdunur-dev/tiny-agent\ncd tiny-agent\nbun install",
+    build: "bun run build",
+    start: "bun run start",
   };
 
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(commands[tab]);
+      await navigator.clipboard.writeText(copyCommands[tab]);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {}
@@ -32,7 +38,7 @@ export function InstallSection() {
           Start coding in seconds
         </h2>
         <p className="text-white/50 text-sm mb-8 leading-relaxed">
-          One command. Zero heavy frameworks. Ready to run offline or with cloud models.
+          Clone the repository, install dependencies with Bun, and run or compile directly.
         </p>
 
         {/* Tabbed Box */}
@@ -47,9 +53,9 @@ export function InstallSection() {
               <span className="text-xs text-white/40 font-mono ml-2">install</span>
             </div>
 
-            {/* Package Manager Buttons */}
+            {/* Step / Command Buttons */}
             <div className="flex bg-[#0a0a0a] rounded border border-white/10 p-0.5">
-              {(["bun", "npm", "binary"] as const).map((t) => (
+              {(["clone", "build", "start"] as const).map((t) => (
                 <button
                   key={t}
                   onClick={() => setTab(t)}
@@ -59,7 +65,7 @@ export function InstallSection() {
                       : "text-white/40 hover:text-white"
                   }`}
                 >
-                  {t}
+                  {t === "clone" ? "1. clone" : t === "build" ? "2. build" : "3. start"}
                 </button>
               ))}
             </div>

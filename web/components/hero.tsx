@@ -6,11 +6,12 @@ import { Check, Copy, ChevronDown } from "lucide-react";
 
 export function Hero() {
   const [copied, setCopied] = useState(false);
-  const command = "bun install -g tiny-agent";
+  const command = "git clone https://github.com/abdunur-dev/tiny-agent && cd tiny-agent && bun install";
+  const copyCommand = "git clone https://github.com/abdunur-dev/tiny-agent\ncd tiny-agent\nbun install\nbun run build";
 
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(command);
+      await navigator.clipboard.writeText(copyCommand);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {}
@@ -62,15 +63,11 @@ export function Hero() {
             />
           </svg>
 
-          {/* Version & Design badge */}
-          <Link
-            href="/design"
-            className="group inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/15 bg-neutral-900/90 hover:border-blue-500/40 hover:bg-blue-500/10 text-[11px] text-neutral-300 transition-all mb-3 shadow-sm"
-          >
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            <span>v0.1.0 · Explore Vercel Design & Future Roadmap</span>
-            <span className="text-neutral-500 group-hover:text-blue-400 group-hover:translate-x-0.5 transition-transform font-mono">→</span>
-          </Link>
+          {/* Version badge */}
+          <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full border border-white/10 bg-neutral-900/80 text-[11px] text-neutral-400 mb-3">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+            <span>v0.1.0 · open-source on Bun</span>
+          </div>
 
           {/* Headline */}
           <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white mb-2.5 sm:mb-3 leading-[1.12] max-w-3xl">

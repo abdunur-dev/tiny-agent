@@ -27,10 +27,6 @@ export function Footer() {
             </h4>
             <ul className="flex flex-col gap-2.5">
               <li><Link href="/docs" className="hover:text-white transition-colors">Documentation</Link></li>
-              <li><Link href="/design" className="hover:text-white transition-colors flex items-center gap-1.5">
-                <span>Design & Future</span>
-                <span className="text-[9px] px-1 py-0.2 rounded bg-blue-500/20 text-blue-400 font-mono">v2</span>
-              </Link></li>
               <li><Link href="/#features" className="hover:text-white transition-colors">Features</Link></li>
               <li><Link href="/#compare" className="hover:text-white transition-colors">Comparison</Link></li>
               <li><Link href="/#demo" className="hover:text-white transition-colors">Simulator</Link></li>
@@ -80,7 +76,6 @@ export function Footer() {
           <span>© 2026 tiny-agent · inspired by fx.sh & Vercel Design</span>
           <div className="flex items-center gap-6">
             <Link href="/" className="hover:text-white transition-colors">Home</Link>
-            <Link href="/design" className="hover:text-white transition-colors">Design</Link>
             <Link href="/docs" className="hover:text-white transition-colors">Docs</Link>
             <a href="https://github.com" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">GitHub</a>
           </div>
