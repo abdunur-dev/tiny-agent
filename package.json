@@ -1,11 +1,34 @@
 {
   "name": "tiny-agent",
   "version": "0.1.0",
-  "description": "Minimal, fast, terminal-based coding agent CLI in TypeScript running on Bun",
+  "description": "Minimal, fast terminal-based coding agent CLI in TypeScript running on Bun",
+  "author": "Abdurhaman Nur <abdurhamannur894@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/abdunur-dev/tiny-agent"
+  },
+  "homepage": "https://github.com/abdunur-dev/tiny-agent#readme",
+  "bugs": {
+    "url": "https://github.com/abdunur-dev/tiny-agent/issues"
+  },
+  "keywords": [
+    "cli",
+    "ai-agent",
+    "coding-agent",
+    "ollama",
+    "groq",
+    "terminal"
+  ],
   "type": "module",
   "bin": {
     "tiny-agent": "./src/index.ts"
   },
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "start": "bun run src/index.ts",
     "build": "bun build --compile --outfile dist/tiny-agent src/index.ts",

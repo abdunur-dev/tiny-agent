@@ -1,0 +1,10 @@
+node_modules/
+dist/
+test/
+.tiny-agent/
+web/
+.git/
+.github/
+AGENTS.md
+bun.lock
+tsconfig.json
