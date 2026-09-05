@@ -49,6 +49,17 @@ export function Nav() {
             Tooling
           </Link>
           <Link
+            href="/design"
+            className={`hover:text-white transition-colors duration-150 flex items-center gap-1.5 ${
+              pathname === "/design" ? "text-white font-medium" : ""
+            }`}
+          >
+            <span>Design</span>
+            <span className="px-1.5 py-0.2 rounded-full bg-blue-500/20 text-blue-400 text-[9px] font-mono border border-blue-500/30">
+              Future
+            </span>
+          </Link>
+          <Link
             href="/docs"
             className={`hover:text-white transition-colors duration-150 ${
               pathname?.startsWith("/docs") ? "text-white font-medium" : ""
@@ -138,6 +149,16 @@ export function Nav() {
             className="block text-sm text-neutral-300 hover:text-white py-1 px-2"
           >
             Tooling
+          </Link>
+          <Link
+            href="/design"
+            onClick={() => setMobileOpen(false)}
+            className="block text-sm text-neutral-300 hover:text-white py-1 px-2 flex items-center justify-between"
+          >
+            <span>Design System & Future</span>
+            <span className="px-1.5 py-0.2 rounded-full bg-blue-500/20 text-blue-400 text-[9px] font-mono border border-blue-500/30">
+              New
+            </span>
           </Link>
           <Link
             href="/docs"
