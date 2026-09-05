@@ -76,8 +76,8 @@ Then add a test for the declined state in test/agent.test.ts and run the test su
         tiny-agent works in turns. The model's response streams token-by-token directly into your terminal without buffering. Each tool call is formatted cleanly in dimmed gray text as it runs.
       </p>
 
-      <p className="text-neutral-400 my-3">
-        Safe tools like <code className="bg-neutral-900 px-1 py-0.5 rounded text-white text-xs">read_file</code> and <code className="bg-neutral-900 px-1 py-0.5 rounded text-white text-xs">search_files</code> execute automatically, while file writes and shell commands pause for your approval.
+      <p className="text-[#737373] my-3">
+        Safe tools like <code className="bg-[#171717] border border-[#262626] px-1 py-0.5 text-[#FAFAFA] text-xs font-mono">read_file</code> and <code className="bg-[#171717] border border-[#262626] px-1 py-0.5 text-[#FAFAFA] text-xs font-mono">search_files</code> execute automatically, while file writes and shell commands pause for your approval.
       </p>
     </DocsShell>
   );

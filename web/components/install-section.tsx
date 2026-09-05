@@ -28,64 +28,58 @@ export function InstallSection() {
   };
 
   return (
-    <section className="py-24 sm:py-36 overflow-hidden border-b border-white/[0.08] w-full">
-      <div className="mx-auto max-w-3xl px-4 sm:px-8 text-center">
+    <section className="py-20 sm:py-28 overflow-hidden border-b border-[#262626] w-full bg-[#0A0A0A]">
+      <div className="mx-auto max-w-3xl px-4 sm:px-6 text-left md:text-center">
         
-        <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-mono border border-white/10 bg-white/[0.02] text-white/50 uppercase tracking-wider mb-4">
-          Install
-        </div>
-        <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white mb-3 font-sans">
-          Start coding in seconds
+        <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#FAFAFA] mb-3">
+          Installation
         </h2>
-        <p className="text-neutral-400 text-sm sm:text-base mb-10 leading-relaxed max-w-lg mx-auto">
+        <p className="text-[#737373] text-sm sm:text-base mb-10 leading-relaxed max-w-lg mx-auto">
           Clone the repository, install dependencies with Bun, and run or compile directly.
         </p>
 
-        {/* Tabbed Box */}
-        <div className="rounded-lg border border-white/15 bg-black overflow-hidden shadow-2xl text-left">
+        {/* Tabbed Box - Sharp hairline border, no rounded corners, no shadows */}
+        <div className="border border-[#262626] bg-[#0A0A0A] text-left">
           
-          {/* Header */}
-          <div className="flex items-center justify-between px-4 py-2.5 border-b border-white/10 bg-[#090909]">
-            <div className="flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 rounded-full bg-red-500/60" />
-              <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/60" />
-              <span className="w-2.5 h-2.5 rounded-full bg-green-500/60" />
-              <span className="text-xs text-white/40 font-mono ml-2">install</span>
+          {/* Minimalist Terminal Header */}
+          <div className="flex items-center justify-between px-4 py-2.5 border-b border-[#262626] bg-[#121212]">
+            <div className="text-xs font-mono text-[#737373]">
+              <span className="text-[#FAFAFA]">step:</span> {tab === "clone" ? "1. clone" : tab === "build" ? "2. build" : "3. start"}
             </div>
 
-            {/* Step / Command Buttons */}
-            <div className="flex bg-[#0a0a0a] rounded border border-white/10 p-0.5">
+            {/* Step Buttons */}
+            <div className="flex border border-[#262626] bg-[#0A0A0A]">
               {(["clone", "build", "start"] as const).map((t) => (
                 <button
                   key={t}
                   onClick={() => setTab(t)}
-                  className={`px-3 py-0.5 text-xs font-mono rounded transition-all duration-150 ${
+                  className={`px-3 py-1 text-xs font-mono transition-colors ${
                     tab === t
-                      ? "bg-white text-black font-bold"
-                      : "text-white/40 hover:text-white"
+                      ? "bg-[#FAFAFA] text-[#0A0A0A] font-semibold"
+                      : "text-[#737373] hover:text-[#FAFAFA]"
                   }`}
                 >
-                  {t === "clone" ? "1. clone" : t === "build" ? "2. build" : "3. start"}
+                  {t}
                 </button>
               ))}
             </div>
           </div>
 
           {/* Command Row */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 bg-black font-mono text-xs text-white/90">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 bg-[#0A0A0A] font-mono text-xs text-[#FAFAFA]">
             <div className="flex items-center gap-2 overflow-x-auto max-w-full">
-              <span className="text-emerald-400 select-none shrink-0">$</span>
+              <span className="text-[#737373] select-none shrink-0">$</span>
               <span className="truncate">{commands[tab]}</span>
             </div>
             <button
               onClick={handleCopy}
-              className="flex items-center justify-center gap-1.5 px-3 py-1 rounded text-xs font-mono border border-white/10 text-white/40 hover:text-white hover:border-white/30 transition-colors shrink-0 self-end sm:self-auto"
+              className="flex items-center justify-center gap-1.5 px-3 py-1 border border-[#262626] bg-[#121212] text-xs font-mono text-[#737373] hover:text-[#FAFAFA] hover:border-[#404040] transition-colors shrink-0 self-start sm:self-auto"
               title="Copy install command"
             >
               {copied ? (
                 <>
-                  <Check className="w-3.5 h-3.5 text-emerald-400" />
-                  <span className="text-emerald-400">Copied</span>
+                  <Check className="w-3.5 h-3.5 text-[#FAFAFA]" />
+                  <span className="text-[#FAFAFA]">Copied</span>
                 </>
               ) : (
                 <>

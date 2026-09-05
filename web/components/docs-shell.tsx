@@ -40,7 +40,7 @@ A minimal, fast terminal-based coding agent CLI in TypeScript, running on Bun.
 Supports local offline models via Ollama and cloud models via Groq.
 
 Current Page: ${title} (${currentPath})
-Read more online at: https://tiny-agent.local${currentPath}`;
+Repository: https://github.com/abdunur-dev/tiny-agent`;
 
     try {
       await navigator.clipboard.writeText(markdown);
@@ -58,80 +58,80 @@ Read more online at: https://tiny-agent.local${currentPath}`;
       ],
     },
     {
-      title: "using tiny-agent",
+      title: "architecture",
       links: [
-        { label: "Safety & permissions", href: "/docs/safety" },
-        { label: "Engines & offline", href: "/docs/engines" },
+        { label: "Safety model", href: "/docs/safety" },
+        { label: "Inference engines", href: "/docs/engines" },
       ],
     },
   ];
 
   return (
-    <div className="min-h-screen bg-black text-white font-mono antialiased selection:bg-white/20 selection:text-white flex flex-col justify-between">
-      <div>
-        {/* fx.sh style Top Header */}
-        <header className="sticky top-0 z-50 flex h-14 items-center justify-between border-b border-white/10 bg-black/90 px-4 sm:px-8 backdrop-blur">
+    <div className="min-h-screen bg-[#0A0A0A] text-[#FAFAFA] flex flex-col selection:bg-[#262626] selection:text-[#FAFAFA]">
+      
+      {/* Top Bar Header */}
+      <div className="w-full flex-1">
+        <header className="sticky top-0 z-50 flex h-14 w-full items-center justify-between border-b border-[#262626] bg-[#0A0A0A] px-4 sm:px-8">
           
-          {/* Left: Brand Logo without Vercel */}
-          <div className="inline-flex items-center gap-2 text-white">
+          {/* Left: Brand */}
+          <div className="flex items-center gap-4">
             <Link
               href="/"
-              className="inline-flex items-center gap-2 hover:opacity-80 transition-opacity"
+              className="flex items-center gap-2 hover:opacity-80 transition-opacity"
               aria-label="tiny-agent home"
             >
-              <div className="w-6 h-6 rounded border border-white/20 bg-neutral-900 flex items-center justify-center">
-                <Terminal className="w-3.5 h-3.5 text-white" />
+              <div className="w-6 h-6 border border-[#262626] bg-[#121212] flex items-center justify-center">
+                <Terminal className="w-3.5 h-3.5 text-[#FAFAFA]" />
               </div>
-              <span className="font-bold tracking-tight text-sm text-white">tiny-agent</span>
+              <span className="font-mono font-semibold tracking-tight text-sm text-[#FAFAFA]">tiny-agent</span>
             </Link>
           </div>
 
-          {/* Center: fx.sh style lowercase monospace nav */}
-          <nav className="hidden md:flex items-center gap-6 text-xs text-neutral-400">
+          {/* Center: Minimal monospace nav */}
+          <nav className="hidden md:flex items-center gap-6 text-xs font-mono text-[#737373]">
             <Link
               href="/docs"
-              className={currentPath === "/docs" ? "text-white font-semibold" : "hover:text-white transition-colors"}
+              className={currentPath === "/docs" ? "text-[#FAFAFA] font-medium" : "hover:text-[#FAFAFA] transition-colors"}
             >
               docs
             </Link>
             <Link
               href="/docs/cli"
-              className={currentPath === "/docs/cli" ? "text-white font-semibold" : "hover:text-white transition-colors"}
+              className={currentPath === "/docs/cli" ? "text-[#FAFAFA] font-medium" : "hover:text-[#FAFAFA] transition-colors"}
             >
               cli
             </Link>
             <Link
               href="/docs/safety"
-              className={currentPath === "/docs/safety" ? "text-white font-semibold" : "hover:text-white transition-colors"}
+              className={currentPath === "/docs/safety" ? "text-[#FAFAFA] font-medium" : "hover:text-[#FAFAFA] transition-colors"}
             >
               safety
             </Link>
             <Link
               href="/docs/engines"
-              className={currentPath === "/docs/engines" ? "text-white font-semibold" : "hover:text-white transition-colors"}
+              className={currentPath === "/docs/engines" ? "text-[#FAFAFA] font-medium" : "hover:text-[#FAFAFA] transition-colors"}
             >
               engines
             </Link>
             <a
-              href="https://github.com"
+              href="https://github.com/abdunur-dev/tiny-agent"
               target="_blank"
               rel="noreferrer"
-              className="hover:text-white transition-colors flex items-center gap-1"
+              className="hover:text-[#FAFAFA] transition-colors"
             >
-              <span>source</span>
-              <span className="text-[10px] text-neutral-500">↗</span>
+              source
             </a>
           </nav>
 
           {/* Right: Copy install button */}
           <div className="flex items-center gap-3">
             <button
-              onClick={() => navigator.clipboard.writeText("bun install -g tiny-agent")}
+              onClick={() => navigator.clipboard.writeText("git clone https://github.com/abdunur-dev/tiny-agent && cd tiny-agent && bun install")}
               type="button"
-              className="inline-flex items-center gap-1.5 text-xs text-neutral-300 hover:text-white transition-colors border border-white/10 hover:border-white/20 px-2.5 py-1.5 rounded-md bg-neutral-950"
+              className="inline-flex items-center gap-1.5 text-xs font-mono text-[#737373] hover:text-[#FAFAFA] transition-colors border border-[#262626] hover:border-[#404040] px-2.5 py-1.5 bg-[#0A0A0A]"
               title="Copy install command"
             >
-              <Copy className="w-3 h-3 text-neutral-400" />
+              <Copy className="w-3 h-3 text-[#737373]" />
               <span>install</span>
             </button>
           </div>
@@ -139,43 +139,43 @@ Read more online at: https://tiny-agent.local${currentPath}`;
         </header>
 
         {/* Mobile Bar */}
-        <div className="sticky top-14 z-40 flex h-11 items-center justify-between border-b border-white/10 bg-black/95 px-4 backdrop-blur lg:hidden">
+        <div className="sticky top-14 z-40 flex h-11 items-center justify-between border-b border-[#262626] bg-[#0A0A0A] px-4 lg:hidden">
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             type="button"
-            className="inline-flex items-center gap-2 text-xs text-neutral-300 hover:text-white"
+            className="inline-flex items-center gap-2 text-xs font-mono text-[#737373] hover:text-[#FAFAFA]"
           >
             {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
-            <span>{mobileMenuOpen ? "Close Menu" : "Browse Docs"}</span>
+            <span>{mobileMenuOpen ? "Close menu" : "Browse docs"}</span>
           </button>
           <button
             onClick={handleCopyForLLM}
             type="button"
-            className="inline-flex items-center gap-1.5 text-xs text-neutral-400 hover:text-white"
+            className="inline-flex items-center gap-1.5 text-xs font-mono text-[#737373] hover:text-[#FAFAFA]"
           >
             <Copy className="w-3.5 h-3.5" />
-            <span>{copiedLlm ? "Copied!" : "Copy for LLM"}</span>
+            <span>{copiedLlm ? "Copied" : "Copy for LLM"}</span>
           </button>
         </div>
 
         {/* Mobile Menu Drawer */}
         {mobileMenuOpen && (
-          <div className="fixed inset-x-0 top-[101px] z-30 bg-black border-b border-white/10 p-6 lg:hidden max-h-[80vh] overflow-y-auto">
+          <div className="fixed inset-x-0 top-[101px] z-30 bg-[#0A0A0A] border-b border-[#262626] p-6 lg:hidden max-h-[80vh] overflow-y-auto">
             {navGroups.map((group) => (
               <div key={group.title} className="mb-6 last:mb-0">
-                <p className="mb-2 text-xs font-mono text-neutral-500 uppercase tracking-wider">
+                <p className="mb-2 text-xs font-mono text-[#737373]">
                   {group.title}
                 </p>
-                <div className="space-y-1.5">
+                <div className="space-y-1.5 font-mono text-xs">
                   {group.links.map((link) => (
                     <Link
                       key={link.href}
                       href={link.href}
                       onClick={() => setMobileMenuOpen(false)}
-                      className={`block text-sm py-0.5 ${
+                      className={`block py-0.5 ${
                         currentPath === link.href
-                          ? "text-white font-bold"
-                          : "text-neutral-400 hover:text-white"
+                          ? "text-[#FAFAFA] font-bold"
+                          : "text-[#737373] hover:text-[#FAFAFA]"
                       }`}
                     >
                       {link.label}
@@ -192,11 +192,11 @@ Read more online at: https://tiny-agent.local${currentPath}`;
           <div className="grid gap-12 lg:grid-cols-[240px_minmax(0,1fr)] xl:grid-cols-[240px_minmax(0,1fr)_180px]">
             
             {/* Left Sticky Sidebar */}
-            <aside className="hidden lg:block lg:sticky lg:top-20 lg:self-start lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto pr-4 text-sm">
+            <aside className="hidden lg:block lg:sticky lg:top-20 lg:self-start lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto pr-4 text-sm font-mono">
               <nav aria-label="Documentation navigation">
                 {navGroups.map((group) => (
                   <div key={group.title} className="mb-8 last:mb-0">
-                    <p className="mb-3 text-xs font-mono text-neutral-500 uppercase tracking-wider">
+                    <p className="mb-3 text-xs text-[#737373]">
                       {group.title}
                     </p>
                     <div className="space-y-1">
@@ -206,8 +206,8 @@ Read more online at: https://tiny-agent.local${currentPath}`;
                           href={link.href}
                           className={`block py-1 text-xs transition-colors ${
                             currentPath === link.href
-                              ? "text-white font-bold"
-                              : "text-neutral-400 hover:text-white"
+                              ? "text-[#FAFAFA] font-semibold"
+                              : "text-[#737373] hover:text-[#FAFAFA]"
                           }`}
                         >
                           {link.label}
@@ -227,29 +227,29 @@ Read more online at: https://tiny-agent.local${currentPath}`;
                 <button
                   onClick={handleCopyForLLM}
                   type="button"
-                  className="inline-flex items-center gap-1.5 text-xs text-neutral-400 hover:text-white border border-white/10 hover:border-white/20 bg-neutral-950 px-2.5 py-1 rounded-md transition-colors"
+                  className="inline-flex items-center gap-1.5 text-xs font-mono text-[#737373] hover:text-[#FAFAFA] border border-[#262626] hover:border-[#404040] bg-[#0A0A0A] px-2.5 py-1 transition-colors"
                   title="Copy full documentation as markdown for LLM context"
                 >
                   <Copy className="w-3.5 h-3.5" />
-                  <span>{copiedLlm ? "Copied for LLM!" : "Copy for LLM"}</span>
+                  <span>{copiedLlm ? "Copied" : "Copy for LLM"}</span>
                 </button>
               </div>
 
-              <article id="docs-content" className="font-mono text-sm sm:text-base leading-[1.8] text-neutral-300">
+              <article id="docs-content" className="text-sm sm:text-base leading-[1.8] text-[#FAFAFA]">
                 {children}
 
-                {/* fx.sh style Previous / Next pagination navigation */}
-                <nav className="mt-16 flex items-stretch gap-4 border-t border-white/10 pt-8 not-prose">
+                {/* Previous / Next pagination navigation */}
+                <nav className="mt-16 flex items-stretch gap-4 border-t border-[#262626] pt-8 not-prose">
                   {prev ? (
                     <Link
                       href={prev.href}
-                      className="group flex flex-1 flex-col items-start gap-1.5 rounded-xl border border-white/10 p-4 text-left no-underline transition-all hover:border-white/25 hover:bg-neutral-900/50"
+                      className="group flex flex-1 flex-col items-start gap-1.5 border border-[#262626] p-4 text-left no-underline transition-colors hover:border-[#404040] hover:bg-[#121212]"
                     >
-                      <span className="flex items-center gap-1 font-mono text-xs text-neutral-400">
-                        <ChevronLeft className="h-3 w-3 transition-transform group-hover:-translate-x-0.5" />
+                      <span className="flex items-center gap-1 font-mono text-xs text-[#737373]">
+                        <ChevronLeft className="h-3 w-3" />
                         <span>Previous</span>
                       </span>
-                      <span className="font-medium text-white group-hover:text-white">
+                      <span className="font-medium text-[#FAFAFA]">
                         {prev.label}
                       </span>
                     </Link>
@@ -260,13 +260,13 @@ Read more online at: https://tiny-agent.local${currentPath}`;
                   {next && (
                     <Link
                       href={next.href}
-                      className="group flex flex-1 flex-col items-end gap-1.5 rounded-xl border border-white/10 p-4 text-right no-underline transition-all hover:border-white/25 hover:bg-neutral-900/50"
+                      className="group flex flex-1 flex-col items-end gap-1.5 border border-[#262626] p-4 text-right no-underline transition-colors hover:border-[#404040] hover:bg-[#121212]"
                     >
-                      <span className="flex items-center gap-1 font-mono text-xs text-neutral-400">
+                      <span className="flex items-center gap-1 font-mono text-xs text-[#737373]">
                         <span>Next</span>
-                        <ChevronRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
+                        <ChevronRight className="h-3 w-3" />
                       </span>
-                      <span className="font-medium text-white group-hover:text-white">
+                      <span className="font-medium text-[#FAFAFA]">
                         {next.label}
                       </span>
                     </Link>
@@ -276,17 +276,17 @@ Read more online at: https://tiny-agent.local${currentPath}`;
 
             </main>
 
-            {/* Right Sticky TOC (Table of Contents) */}
+            {/* Right Sticky TOC */}
             <aside className="hidden xl:block xl:sticky xl:top-20 xl:self-start text-xs font-mono">
-              <p className="text-neutral-500 uppercase tracking-wider mb-3">
+              <p className="text-[#737373] mb-3">
                 on this page
               </p>
-              <ul className="space-y-2 border-l border-white/10 pl-3">
+              <ul className="space-y-2 border-l border-[#262626] pl-3">
                 {toc.map((item) => (
                   <li key={item.href}>
                     <a
                       href={item.href}
-                      className="text-neutral-400 hover:text-white transition-colors block"
+                      className="text-[#737373] hover:text-[#FAFAFA] transition-colors block"
                     >
                       {item.label}
                     </a>
@@ -299,25 +299,25 @@ Read more online at: https://tiny-agent.local${currentPath}`;
         </div>
       </div>
 
-      {/* fx.sh style minimal docs footer */}
-      <footer className="mt-8 px-4 sm:px-8 pt-8 pb-10 border-t border-white/[0.06]">
-        <div className="flex w-full flex-wrap items-center justify-end gap-x-3 gap-y-1 font-mono text-xs text-neutral-500">
-          <Link className="transition-colors hover:text-white" href="/#features">
+      {/* Minimal docs footer */}
+      <footer className="mt-8 px-4 sm:px-8 pt-8 pb-10 border-t border-[#262626]">
+        <div className="flex w-full flex-wrap items-center justify-end gap-x-3 gap-y-1 font-mono text-xs text-[#737373]">
+          <Link className="transition-colors hover:text-[#FAFAFA]" href="/#features">
             features
           </Link>
           <a
-            href="https://github.com"
-            className="transition-colors hover:text-white"
+            href="https://github.com/abdunur-dev/tiny-agent"
+            className="transition-colors hover:text-[#FAFAFA]"
             target="_blank"
             rel="noreferrer"
           >
             source
           </a>
-          <Link className="transition-colors hover:text-white" href="/docs">
+          <Link className="transition-colors hover:text-[#FAFAFA]" href="/docs">
             docs
           </Link>
           <span aria-hidden="true">·</span>
-          <Link href="/" className="transition-colors hover:text-white text-neutral-400">
+          <Link href="/" className="transition-colors hover:text-[#FAFAFA] text-[#FAFAFA]">
             tiny-agent
           </Link>
         </div>

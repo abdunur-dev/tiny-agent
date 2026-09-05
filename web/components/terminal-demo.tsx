@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Play, RotateCcw } from "lucide-react";
+import { RotateCcw } from "lucide-react";
 
 interface Scenario {
   id: string;
@@ -10,34 +10,37 @@ interface Scenario {
   provider: string;
   toolAction: string;
   autoResolve?: string;
+  confirmationPrompt?: string;
   output: string;
 }
 
 const SCENARIOS: Scenario[] = [
   {
-    id: "read",
-    name: "Read & inspect",
-    command: 'tiny-agent "read package.json and list dependencies"',
-    provider: "ollama / qwen2.5-coder:latest",
-    toolAction: "⚡ read_file package.json",
-    autoResolve: "↳ auto-resolved 'package.json' → './package.json'",
-    output: "The project uses Bun runtime with zero external agent frameworks.\nDependencies: clsx, lucide-react, next, react, tailwindcss.",
-  },
-  {
     id: "edit",
-    name: "Surgical edit",
-    command: 'tiny-agent "change the default port to 8080 in server.ts"',
-    provider: "groq / openai/gpt-oss-120b",
-    toolAction: "⚡ edit_file server.ts",
-    output: "✓ Successfully replaced 'port = 3000' with 'port = 8080' in server.ts.",
+    name: "edit_file",
+    command: 'tiny-agent "change the server port to 8080 in src/config.ts"',
+    provider: "ollama / qwen2.5-coder:latest",
+    toolAction: "⚡ edit_file src/config.ts",
+    confirmationPrompt: "Proceed? (y/n): ",
+    output: "✓ Successfully replaced 'port = 3000' with 'port = 8080' in src/config.ts.",
   },
   {
-    id: "search",
-    name: "Search regex",
-    command: 'tiny-agent "search for todos across src/"',
+    id: "exec",
+    name: "run_shell_command",
+    command: 'tiny-agent "execute full test suite in bun"',
+    provider: "groq / openai/gpt-oss-120b",
+    toolAction: "⚡ run_shell_command cmd /c bun test",
+    confirmationPrompt: "Proceed? (y/n): ",
+    output: "33 pass, 0 fail (131 expect calls) [1.09s]\nAll unit, model, and MCP tests passed.",
+  },
+  {
+    id: "read",
+    name: "read_file",
+    command: 'tiny-agent "inspect package.json dependencies"',
     provider: "ollama / qwen2.5-coder:latest",
-    toolAction: "⚡ search_files pattern='TODO' directory='src/'",
-    output: "Found 2 items:\n  - src/agent.ts:42: // TODO: Add streaming token cancel\n  - src/tools.ts:89: // TODO: Support glob patterns",
+    toolAction: "↳ read_file package.json",
+    autoResolve: "↳ auto-resolved 'package.json' → './package.json'",
+    output: "Standalone CLI with zero framework bloat. Standard dependencies: @modelcontextprotocol/sdk.",
   },
 ];
 
@@ -58,50 +61,46 @@ export function TerminalDemo() {
       if (typedText.length < activeScenario.command.length) {
         timeout = setTimeout(() => {
           setTypedText(activeScenario.command.slice(0, typedText.length + 1));
-        }, 30);
+        }, 28);
       } else {
-        timeout = setTimeout(() => setStep(1), 400);
+        timeout = setTimeout(() => setStep(1), 350);
       }
     } else if (step === 1) {
-      timeout = setTimeout(() => setStep(2), 600);
+      timeout = setTimeout(() => setStep(2), 500);
     } else if (step === 2) {
-      timeout = setTimeout(() => setStep(3), 800);
+      timeout = setTimeout(() => setStep(3), 600);
     }
 
     return () => clearTimeout(timeout);
   }, [typedText, step, activeScenario]);
 
   return (
-    <section id="demo" className="py-24 sm:py-36 border-b border-white/[0.08] w-full bg-black">
-      <div className="mx-auto max-w-6xl px-4 sm:px-8 lg:px-12">
+    <section id="demo" className="py-20 sm:py-28 border-b border-[#262626] w-full bg-[#0A0A0A]">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6">
         
         {/* Header */}
-        <div className="text-center mb-14 sm:mb-18">
-          <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-mono border border-white/10 bg-white/[0.02] text-white/50 uppercase tracking-wider mb-4">
-            Interactive Simulator
-          </div>
-          <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white mb-3 font-sans">
-            See tiny-agent in action
+        <div className="text-left md:text-center mb-12 sm:mb-16">
+          <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#FAFAFA] mb-3">
+            Interactive terminal simulator
           </h2>
-          <p className="text-neutral-400 text-sm sm:text-base max-w-lg mx-auto leading-relaxed">
-            Select a scenario below to watch tiny-agent execute commands, invoke tools, and stream responses.
+          <p className="text-[#737373] text-sm sm:text-base max-w-lg mx-auto leading-relaxed">
+            Watch tiny-agent resolve paths, request tool approval, and stream answers without bloated abstraction layers.
           </p>
         </div>
 
-        {/* Controls */}
-        <div className="flex items-center gap-2 mb-4 overflow-x-auto pb-2 sm:pb-0 no-scrollbar">
+        {/* Scenario Controls - Sharp hairline borders, no rounded corners */}
+        <div className="flex items-center gap-2 mb-3 overflow-x-auto pb-1">
           {SCENARIOS.map((sc) => (
             <button
               key={sc.id}
               onClick={() => setActiveScenario(sc)}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-mono border transition-all whitespace-nowrap shrink-0 ${
+              className={`px-3 py-1.5 text-xs font-mono border transition-colors whitespace-nowrap ${
                 activeScenario.id === sc.id
-                  ? "border-white bg-white text-black font-medium"
-                  : "border-white/10 bg-[#0a0a0a] text-white/60 hover:text-white hover:border-white/30"
+                  ? "border-[#FAFAFA] bg-[#FAFAFA] text-[#0A0A0A] font-semibold"
+                  : "border-[#262626] bg-[#0A0A0A] text-[#737373] hover:text-[#FAFAFA] hover:border-[#404040]"
               }`}
             >
-              <Play className="w-3 h-3" />
-              <span>{sc.name}</span>
+              {sc.name}
             </button>
           ))}
           <button
@@ -109,59 +108,70 @@ export function TerminalDemo() {
               setTypedText("");
               setStep(0);
             }}
-            className="px-2.5 py-1.5 rounded-md text-xs font-mono border border-white/10 bg-[#0a0a0a] text-white/40 hover:text-white hover:border-white/30 transition-colors shrink-0"
-            title="Replay animation"
+            className="px-2.5 py-1.5 text-xs font-mono border border-[#262626] bg-[#0A0A0A] text-[#737373] hover:text-[#FAFAFA] hover:border-[#404040] transition-colors"
+            title="Replay scenario"
           >
             <RotateCcw className="w-3.5 h-3.5" />
           </button>
         </div>
 
-        {/* Terminal Window */}
-        <div className="rounded-lg border border-white/15 bg-black font-mono text-xs overflow-hidden shadow-2xl">
-          {/* Bar */}
-          <div className="flex items-center justify-between border-b border-white/10 px-4 py-2.5 bg-[#090909]">
-            <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-red-500/60" />
-              <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/60" />
-              <span className="w-2.5 h-2.5 rounded-full bg-green-500/60" />
-              <span className="text-[11px] text-white/40 ml-2">bash ~ tiny-agent</span>
+        {/* Terminal Window - Sharp 1px #262626 border, #0A0A0A bg, no drop shadows */}
+        <div className="border border-[#262626] bg-[#0A0A0A] font-mono text-xs overflow-hidden">
+          
+          {/* Minimalist Terminal Title Bar */}
+          <div className="flex items-center justify-between border-b border-[#262626] px-4 py-2 bg-[#121212]">
+            <div className="flex items-center gap-2 text-xs font-mono text-[#737373]">
+              <span className="text-[#FAFAFA] font-semibold">tiny-agent</span>
+              <span>·</span>
+              <span>interactive session</span>
             </div>
-            <div className="text-[11px] text-white/40 hidden sm:block truncate max-w-[200px]">
+            <div className="text-[11px] text-[#737373] hidden sm:block">
               [{activeScenario.provider}]
             </div>
           </div>
 
-          {/* Terminal Screen */}
-          <div className="p-5 space-y-3 min-h-[220px] leading-relaxed select-text">
-            {/* Command Line */}
+          {/* Terminal Viewport */}
+          <div className="p-5 space-y-3 min-h-[220px] leading-relaxed select-text font-mono">
+            {/* Input line with blinking bold yellow cursor */}
             <div className="flex items-start gap-2">
-              <span className="text-emerald-400 select-none font-bold">$</span>
-              <span className="text-white">
+              <span className="text-[#737373] select-none font-bold">$</span>
+              <span className="text-[#FAFAFA]">
                 {typedText}
                 {step === 0 && (
-                  <span className="inline-block w-1.5 h-3.5 bg-white ml-0.5 align-middle animate-pulse" />
+                  <span className="inline-block w-2 h-4 bg-[#FFD60A] ml-1 align-middle animate-terminal-cursor" />
                 )}
               </span>
             </div>
 
-            {/* Provider & Action Output */}
+            {/* Provider line and tool invocation */}
             {step >= 1 && (
-              <div className="text-white/40 space-y-1 pt-1">
+              <div className="text-[#737373] space-y-1 pt-1">
                 <div>[tiny-agent] provider={activeScenario.provider}</div>
-                <div className="text-white/80">{activeScenario.toolAction}</div>
+                <div className="text-[#FAFAFA] font-medium">{activeScenario.toolAction}</div>
                 {activeScenario.autoResolve && (
-                  <div className="text-white/40">{activeScenario.autoResolve}</div>
+                  <div className="text-[#737373]">{activeScenario.autoResolve}</div>
                 )}
               </div>
             )}
 
-            {/* Final Answer */}
-            {step >= 2 && (
-              <div className="text-white pt-2 border-t border-white/10 whitespace-pre-line text-xs leading-relaxed">
+            {/* Deliberate Accent Moment: Proceed? (y/n) confirmation prompt in #FFD60A */}
+            {step >= 2 && activeScenario.confirmationPrompt && (
+              <div className="pt-1 text-xs">
+                <span className="text-[#FFD60A] font-bold">
+                  {activeScenario.confirmationPrompt}
+                </span>
+                <span className="text-[#FAFAFA] font-bold">y</span>
+              </div>
+            )}
+
+            {/* Execution Result */}
+            {step >= 3 && (
+              <div className="text-[#FAFAFA] pt-2 border-t border-[#262626] whitespace-pre-line text-xs leading-relaxed">
                 {activeScenario.output}
               </div>
             )}
           </div>
+
         </div>
 
       </div>

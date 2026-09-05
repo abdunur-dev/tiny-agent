@@ -1,174 +1,96 @@
-import Link from "next/link";
-import { ArrowUpRight, Zap, Shield, Cpu } from "lucide-react";
+"use client";
+
+import { Cpu, HardDrive, Zap } from "lucide-react";
 
 export function TechStack() {
   return (
-    <section id="tooling" className="py-24 sm:py-36 border-b border-white/[0.08] bg-black overflow-hidden relative w-full">
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12">
+    <section id="tooling" className="py-20 sm:py-28 border-b border-[#262626] bg-[#0A0A0A] w-full">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
         
         {/* Title */}
-        <div className="text-center mb-16 sm:mb-20">
-          <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white mb-3 font-sans">
-            Built on a foundation of fast,{" "}
-            <span className="block sm:inline">production-grade tooling</span>
+        <div className="text-left md:text-center mb-14 sm:mb-18 max-w-2xl mx-auto">
+          <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#FAFAFA] mb-3">
+            Production-grade tooling foundation
           </h2>
-          <p className="text-neutral-400 text-sm sm:text-base max-w-xl mx-auto">
-            Combining the speed of Bun's native bundler with private local models and ultra-fast cloud inference.
+          <p className="text-[#737373] text-sm sm:text-base leading-relaxed">
+            Combines Bun's native bundler and runtime with private local models and fast cloud streaming.
           </p>
         </div>
 
-        {/* The Iconic Next.js Circuit & Central Chip Illustration */}
-        <div className="relative flex flex-col items-center justify-center my-10 max-w-4xl mx-auto">
-          
-          {/* Animated Circuit SVG */}
-          <div className="w-full max-w-[800px] h-[180px] sm:h-[220px] relative">
+        {/* Minimalist Monochrome Architecture Wireframe */}
+        <div className="relative flex flex-col items-center justify-center my-8 max-w-4xl mx-auto">
+          <div className="w-full max-w-[760px] h-[160px] sm:h-[180px] relative">
             <svg
-              className="w-full h-full text-neutral-800"
-              viewBox="0 0 800 220"
+              className="w-full h-full text-[#262626]"
+              viewBox="0 0 760 180"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
-              {/* Background static circuit traces */}
-              <path
-                d="M 50 110 L 250 110 L 350 110"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeOpacity="0.4"
-              />
-              <path
-                d="M 750 110 L 550 110 L 450 110"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeOpacity="0.4"
-              />
-              <path
-                d="M 120 20 L 250 20 L 360 80"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeOpacity="0.4"
-              />
-              <path
-                d="M 680 20 L 550 20 L 440 80"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeOpacity="0.4"
-              />
-              <path
-                d="M 160 200 L 280 200 L 360 140"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeOpacity="0.4"
-              />
-              <path
-                d="M 640 200 L 520 200 L 440 140"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeOpacity="0.4"
-              />
+              <path d="M 40 90 L 250 90 L 330 90" stroke="currentColor" strokeWidth="1" />
+              <path d="M 720 90 L 510 90 L 430 90" stroke="currentColor" strokeWidth="1" />
+              <path d="M 100 30 L 240 30 L 330 70" stroke="currentColor" strokeWidth="1" />
+              <path d="M 660 30 L 520 30 L 430 70" stroke="currentColor" strokeWidth="1" />
+              <path d="M 140 150 L 260 150 L 330 110" stroke="currentColor" strokeWidth="1" />
+              <path d="M 620 150 L 500 150 L 430 110" stroke="currentColor" strokeWidth="1" />
 
-              {/* Animated pulses running down traces into center */}
-              <path
-                d="M 50 110 L 250 110 L 350 110"
-                stroke="url(#blue-pulse)"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                className="animate-circuit-pulse"
-              />
-              <path
-                d="M 750 110 L 550 110 L 450 110"
-                stroke="url(#orange-pulse)"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                className="animate-circuit-pulse"
-              />
-              <path
-                d="M 120 20 L 250 20 L 360 80"
-                stroke="url(#emerald-pulse)"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                className="animate-circuit-pulse-fast"
-              />
-              <path
-                d="M 680 20 L 550 20 L 440 80"
-                stroke="url(#purple-pulse)"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                className="animate-circuit-pulse-fast"
-              />
-
-              {/* Gradients for glowing pulses */}
-              <defs>
-                <linearGradient id="blue-pulse" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#0070F3" stopOpacity="0" />
-                  <stop offset="80%" stopColor="#0070F3" stopOpacity="1" />
-                  <stop offset="100%" stopColor="#50E3C2" stopOpacity="0" />
-                </linearGradient>
-                <linearGradient id="orange-pulse" x1="100%" y1="0%" x2="0%" y2="0%">
-                  <stop offset="0%" stopColor="#F5A623" stopOpacity="0" />
-                  <stop offset="80%" stopColor="#FF4A81" stopOpacity="1" />
-                  <stop offset="100%" stopColor="#DF6CF6" stopOpacity="0" />
-                </linearGradient>
-                <linearGradient id="emerald-pulse" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#10B981" stopOpacity="0" />
-                  <stop offset="100%" stopColor="#34D399" stopOpacity="1" />
-                </linearGradient>
-                <linearGradient id="purple-pulse" x1="100%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stopColor="#8B5CF6" stopOpacity="0" />
-                  <stop offset="100%" stopColor="#EC4899" stopOpacity="1" />
-                </linearGradient>
-              </defs>
+              {/* Minimalist monochrome indicator pulses */}
+              <circle cx="250" cy="90" r="2.5" fill="#FAFAFA" />
+              <circle cx="510" cy="90" r="2.5" fill="#FAFAFA" />
+              <circle cx="240" cy="30" r="2" fill="#737373" />
+              <circle cx="520" cy="30" r="2" fill="#737373" />
             </svg>
 
-            {/* Central CPU / Engine Chip */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 flex flex-col items-center justify-center w-36 h-20 sm:w-44 sm:h-24 rounded-xl border border-white/20 bg-neutral-950 shadow-2xl">
-              <div className="flex items-center gap-1.5 mb-1">
-                <Cpu className="w-4 h-4 text-white" />
-                <span className="text-xs font-mono font-bold tracking-wider text-white">
-                  CORE ENGINE
+            {/* Central Architecture Module - Sharp border, no shadows, no blur */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 flex flex-col items-center justify-center w-44 h-20 border border-[#262626] bg-[#0A0A0A]">
+              <div className="flex items-center gap-1.5 mb-1 text-[#FAFAFA]">
+                <Cpu className="w-3.5 h-3.5" />
+                <span className="text-xs font-mono font-medium tracking-tight">
+                  tiny-agent core
                 </span>
               </div>
-              <span className="text-[11px] font-mono text-neutral-400">
+              <span className="text-[11px] font-mono text-[#737373]">
                 Bun + TypeScript
               </span>
-              <div className="absolute -inset-0.5 rounded-xl bg-gradient-to-r from-blue-500/20 via-white/10 to-emerald-500/20 blur-sm -z-10" />
             </div>
           </div>
-
         </div>
 
-        {/* 3 Supporting Tech Cards (like Next.js React / Turbopack / Vercel cards) */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto mt-6">
+        {/* 3 Supporting Tech Cards - Sharp hairline borders, #0A0A0A, no shadows */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-5xl mx-auto mt-6">
           
-          {/* Bun Runtime */}
-          <div className="p-6 rounded-xl border border-white/[0.08] bg-neutral-950/60 hover:border-white/25 hover:bg-neutral-900/40 transition-all duration-200 group">
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-sm font-semibold text-white">Bun Runtime</span>
-              <ArrowUpRight className="w-4 h-4 text-neutral-500 group-hover:text-white transition-colors" />
+          <div className="p-6 border border-[#262626] bg-[#0A0A0A] hover:border-[#404040] transition-colors">
+            <div className="flex items-center gap-2 mb-3">
+              <Zap className="w-4 h-4 text-[#FAFAFA]" />
+              <h3 className="font-heading text-base font-semibold text-[#FAFAFA]">
+                Bun Runtime
+              </h3>
             </div>
-            <p className="text-xs text-neutral-400 leading-relaxed">
-              All-in-one JavaScript & TypeScript toolkit. Boots the agent in under 10ms and compiles native binaries with zero external runtime requirements.
+            <p className="text-xs sm:text-sm text-[#737373] leading-relaxed">
+              Native TypeScript execution without compilation steps. Sub-10ms startup and fast compilation to a single binary.
             </p>
           </div>
 
-          {/* Ollama Offline */}
-          <div className="p-6 rounded-xl border border-white/[0.08] bg-neutral-950/60 hover:border-white/25 hover:bg-neutral-900/40 transition-all duration-200 group">
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-sm font-semibold text-white">Ollama Engine</span>
-              <ArrowUpRight className="w-4 h-4 text-neutral-500 group-hover:text-white transition-colors" />
+          <div className="p-6 border border-[#262626] bg-[#0A0A0A] hover:border-[#404040] transition-colors">
+            <div className="flex items-center gap-2 mb-3">
+              <HardDrive className="w-4 h-4 text-[#FAFAFA]" />
+              <h3 className="font-heading text-base font-semibold text-[#FAFAFA]">
+                Ollama Engine
+              </h3>
             </div>
-            <p className="text-xs text-neutral-400 leading-relaxed">
-              Private, local-first inference running natively on your hardware. Your files, prompts, and tokens never leave your local machine.
+            <p className="text-xs sm:text-sm text-[#737373] leading-relaxed">
+              Private, local-first inference running directly on your machine. Your code and prompts never leave your local environment.
             </p>
           </div>
 
-          {/* Groq Cloud */}
-          <div className="p-6 rounded-xl border border-white/[0.08] bg-neutral-950/60 hover:border-white/25 hover:bg-neutral-900/40 transition-all duration-200 group">
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-sm font-semibold text-white">Groq LPU Cloud</span>
-              <ArrowUpRight className="w-4 h-4 text-neutral-500 group-hover:text-white transition-colors" />
+          <div className="p-6 border border-[#262626] bg-[#0A0A0A] hover:border-[#404040] transition-colors">
+            <div className="flex items-center gap-2 mb-3">
+              <Cpu className="w-4 h-4 text-[#FAFAFA]" />
+              <h3 className="font-heading text-base font-semibold text-[#FAFAFA]">
+                Groq Cloud
+              </h3>
             </div>
-            <p className="text-xs text-neutral-400 leading-relaxed">
-              Ultra-fast cloud fallback delivering 500+ tokens per second. Stream responses with instantaneous tool generation over standard OpenAI endpoints.
+            <p className="text-xs sm:text-sm text-[#737373] leading-relaxed">
+              Fast cloud inference via OpenAI-compatible endpoints. Instant tool streaming when you need larger model capabilities.
             </p>
           </div>
 

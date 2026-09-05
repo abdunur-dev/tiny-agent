@@ -1,7 +1,5 @@
 "use client";
 
-import { Check, Minus } from "lucide-react";
-
 export function Comparison() {
   const rows = [
     {
@@ -21,11 +19,11 @@ export function Comparison() {
     },
     {
       feature: "File Tools",
-      tinyAgent: "Dedicated read_file, write_file, edit_file (single replacement), search_files",
+      tinyAgent: "Dedicated read_file, write_file, edit_file (single match), search_files",
       fxSh: "Shell commands executed directly in bash",
     },
     {
-      feature: "External Extensibility",
+      feature: "Extensibility",
       tinyAgent: "Model Context Protocol (MCP) client + AGENTS.md + SKILL.md",
       fxSh: "Shell script aliases and environment variables",
     },
@@ -42,49 +40,46 @@ export function Comparison() {
   ];
 
   return (
-    <section id="compare" className="py-24 sm:py-36 border-b border-white/[0.08] bg-white/[0.01] w-full">
-      <div className="max-w-6xl mx-auto px-4 sm:px-8 lg:px-12">
+    <section id="compare" className="py-20 sm:py-28 border-b border-[#262626] bg-[#0A0A0A] w-full">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6">
         
         {/* Header */}
-        <div className="text-center mb-16 sm:mb-20">
-          <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-mono border border-white/10 bg-white/[0.02] text-white/50 uppercase tracking-wider mb-4">
-            Comparison
-          </div>
-          <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white mb-3 font-sans">
+        <div className="text-left md:text-center mb-12 sm:mb-16">
+          <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#FAFAFA] mb-3">
             tiny-agent vs fx.sh
           </h2>
-          <p className="text-neutral-400 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
-            An honest look at what each tool actually does today — no invented benchmarks or marketing fluff.
+          <p className="text-[#737373] text-sm sm:text-base max-w-lg mx-auto leading-relaxed">
+            An honest look at what each tool actually does today — no invented benchmarks or marketing claims.
           </p>
         </div>
 
-        {/* Comparison Table */}
-        <div className="rounded-lg border border-white/10 bg-black overflow-hidden shadow-2xl">
+        {/* Comparison Table - Sharp hairline border, no shadows */}
+        <div className="border border-[#262626] bg-[#0A0A0A] overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-left font-mono text-xs border-collapse">
               <thead>
-                <tr className="border-b border-white/10 bg-neutral-900/50">
-                  <th className="py-3 px-4 sm:px-6 text-white/40 uppercase font-semibold text-[11px] w-1/4">
+                <tr className="border-b border-[#262626] bg-[#121212]">
+                  <th className="py-3 px-4 sm:px-6 text-[#737373] font-semibold text-[11px] w-1/4">
                     Capability
                   </th>
-                  <th className="py-3 px-4 sm:px-6 text-white font-bold text-[11px] w-3/8 border-l border-white/10 bg-white/[0.02]">
+                  <th className="py-3 px-4 sm:px-6 text-[#FAFAFA] font-bold text-[11px] w-3/8 border-l border-[#262626] bg-[#171717]/40">
                     tiny-agent
                   </th>
-                  <th className="py-3 px-4 sm:px-6 text-neutral-400 font-semibold text-[11px] w-3/8 border-l border-white/10">
+                  <th className="py-3 px-4 sm:px-6 text-[#737373] font-semibold text-[11px] w-3/8 border-l border-[#262626]">
                     fx.sh
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/5">
+              <tbody className="divide-y divide-[#262626]">
                 {rows.map((row) => (
-                  <tr key={row.feature} className="hover:bg-white/[0.02] transition-colors">
-                    <td className="py-3.5 px-4 sm:px-6 text-white/60 font-medium">
+                  <tr key={row.feature} className="hover:bg-[#121212]/50 transition-colors">
+                    <td className="py-3.5 px-4 sm:px-6 text-[#FAFAFA] font-medium">
                       {row.feature}
                     </td>
-                    <td className="py-3.5 px-4 sm:px-6 text-neutral-200 border-l border-white/10 bg-white/[0.01]">
+                    <td className="py-3.5 px-4 sm:px-6 text-[#FAFAFA] border-l border-[#262626] bg-[#121212]/20">
                       {row.tinyAgent}
                     </td>
-                    <td className="py-3.5 px-4 sm:px-6 text-neutral-400 border-l border-white/10">
+                    <td className="py-3.5 px-4 sm:px-6 text-[#737373] border-l border-[#262626]">
                       {row.fxSh}
                     </td>
                   </tr>
@@ -94,8 +89,8 @@ export function Comparison() {
           </div>
         </div>
 
-        <div className="text-center mt-6 text-xs text-white/40 font-mono">
-          Both tools share the same minimal Unix philosophy: fast terminal execution with zero bloated frameworks.
+        <div className="text-left md:text-center mt-6 text-xs text-[#737373] font-mono">
+          Both tools share a minimal Unix philosophy: fast terminal execution with zero bloated frameworks.
         </div>
 
       </div>
