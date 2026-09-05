@@ -78,7 +78,7 @@ tiny-agent --cloud`}
       </h2>
 
       <p className="text-neutral-400 mb-3">
-        Compile tiny-agent into a standalone executable using Bun's native binary compiler:
+        Compile tiny-agent into a standalone executable using Bun&apos;s native binary compiler:
       </p>
 
       <CommandCard command="bun run build" />

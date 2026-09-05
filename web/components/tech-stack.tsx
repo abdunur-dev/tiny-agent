@@ -19,7 +19,7 @@ export function TechStack() {
             Production-grade tooling foundation
           </h2>
           <p className="text-[#8A8F98] text-sm sm:text-base leading-relaxed">
-            Combines Bun's native bundler and runtime with private local models and fast cloud streaming.
+            Combines Bun&apos;s native bundler and runtime with private local models and fast cloud streaming.
           </p>
         </div>
 

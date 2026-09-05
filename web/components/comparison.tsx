@@ -34,7 +34,7 @@ export function Comparison() {
             <span>differentiation</span>
           </div>
           <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#FAFAFA] mb-4">
-            What fx doesn't do yet
+            What fx doesn&apos;t do yet
           </h2>
           <p className="text-[#8A8F98] text-sm sm:text-base max-w-2xl leading-relaxed">
             Both tools share a minimal Unix ethos with zero framework bloat. Here is how their capabilities differ today based on verifiable code.

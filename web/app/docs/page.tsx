@@ -73,7 +73,7 @@ Then add a test for the declined state in test/agent.test.ts and run the test su
       </h2>
 
       <p className="text-neutral-400 my-3">
-        tiny-agent works in turns. The model's response streams token-by-token directly into your terminal without buffering. Each tool call is formatted cleanly in dimmed gray text as it runs.
+        tiny-agent works in turns. The model&apos;s response streams token-by-token directly into your terminal without buffering. Each tool call is formatted cleanly in dimmed gray text as it runs.
       </p>
 
       <p className="text-[#737373] my-3">
