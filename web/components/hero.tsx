@@ -6,8 +6,8 @@ import { Check, Copy } from "lucide-react";
 
 export function Hero() {
   const [copied, setCopied] = useState(false);
-  const command = "git clone https://github.com/abdunur-dev/tiny-agent && cd tiny-agent && bun install";
-  const copyCommand = "git clone https://github.com/abdunur-dev/tiny-agent\ncd tiny-agent\nbun install\nbun run build";
+  const command = "bun install -g tiny-agent";
+  const copyCommand = "bun install -g tiny-agent";
 
   const handleCopy = async () => {
     try {

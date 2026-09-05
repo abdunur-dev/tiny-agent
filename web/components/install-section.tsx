@@ -4,24 +4,17 @@ import { useState } from "react";
 import { Check, Copy } from "lucide-react";
 
 export function InstallSection() {
-  const [tab, setTab] = useState<"clone" | "build" | "start">("clone");
+  const [tab, setTab] = useState<"bun" | "npm">("bun");
   const [copied, setCopied] = useState(false);
 
   const commands = {
-    clone: "git clone https://github.com/abdunur-dev/tiny-agent && cd tiny-agent && bun install",
-    build: "bun run build",
-    start: "bun run start",
-  };
-
-  const copyCommands = {
-    clone: "git clone https://github.com/abdunur-dev/tiny-agent\ncd tiny-agent\nbun install",
-    build: "bun run build",
-    start: "bun run start",
+    bun: "bun install -g tiny-agent",
+    npm: "npm install -g tiny-agent",
   };
 
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(copyCommands[tab]);
+      await navigator.clipboard.writeText(commands[tab]);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {}
@@ -34,8 +27,8 @@ export function InstallSection() {
         <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#FAFAFA] mb-3">
           Installation
         </h2>
-        <p className="text-[#737373] text-sm sm:text-base mb-10 leading-relaxed max-w-lg mx-auto">
-          Clone the repository, install dependencies with Bun, and run or compile directly.
+        <p className="text-[#737373] text-sm sm:text-base mb-8 leading-relaxed max-w-lg mx-auto">
+          Install globally via Bun or npm to get the tiny-agent executable in your terminal.
         </p>
 
         {/* Tabbed Box - Sharp hairline border, no rounded corners, no shadows */}
@@ -44,12 +37,12 @@ export function InstallSection() {
           {/* Minimalist Terminal Header */}
           <div className="flex items-center justify-between px-4 py-2.5 border-b border-[#262626] bg-[#121212]">
             <div className="text-xs font-mono text-[#737373]">
-              <span className="text-[#FAFAFA]">step:</span> {tab === "clone" ? "1. clone" : tab === "build" ? "2. build" : "3. start"}
+              <span className="text-[#FAFAFA]">package:</span> tiny-agent
             </div>
 
-            {/* Step Buttons */}
+            {/* Package Manager Tabs */}
             <div className="flex border border-[#262626] bg-[#0A0A0A]">
-              {(["clone", "build", "start"] as const).map((t) => (
+              {(["bun", "npm"] as const).map((t) => (
                 <button
                   key={t}
                   onClick={() => setTab(t)}
@@ -63,6 +56,11 @@ export function InstallSection() {
                 </button>
               ))}
             </div>
+          </div>
+
+          {/* Quiet clarification note directly above the command */}
+          <div className="px-4 pt-3.5 pb-1 text-[11px] font-mono text-[#737373]">
+            Requires <a href="https://bun.sh" target="_blank" rel="noreferrer" className="text-[#FAFAFA] hover:underline underline-offset-2">Bun</a> (https://bun.sh) installed, even when installing via npm
           </div>
 
           {/* Command Row */}
