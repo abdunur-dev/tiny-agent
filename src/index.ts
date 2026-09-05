@@ -11,6 +11,7 @@ import {
   type AgentContext,
 } from './agent.ts';
 import { loadSkills } from './skills.ts';
+import { loadMcpServers } from './mcp.ts';
 
 function printHelp() {
   console.log(`
@@ -76,10 +77,11 @@ async function main() {
 
   const skills = loadSkills();
   const projectContext = loadProjectContext();
+  const mcp = await loadMcpServers(runtimeConfig.mcpServers);
 
   const ctx: AgentContext = {
     model: modelAdapter,
-    tools: defaultTools,
+    tools: [...defaultTools, ...mcp.tools],
     history: [
       {
         role: 'system',
@@ -104,6 +106,18 @@ async function main() {
         `\x1b[90m↳ found ${skills.length} skill${skills.length === 1 ? '' : 's'} (${skillNames})\x1b[0m\n`
       );
     }
+    for (const status of mcp.statuses) {
+      if (status.status === 'connected') {
+        const count = status.toolCount ?? 0;
+        process.stdout.write(
+          `\x1b[90m↳ connected to MCP server: ${status.name} (${count} tool${count === 1 ? '' : 's'})\x1b[0m\n`
+        );
+      } else {
+        process.stdout.write(
+          `\x1b[33m⚠ Failed to connect to MCP server "${status.name}": ${status.error}\x1b[0m\n`
+        );
+      }
+    }
   }
 
   const isOneShot = nonFlagArgs.length > 0;
@@ -117,8 +131,10 @@ async function main() {
       });
     } catch (err: any) {
       console.error(`\x1b[31mError:\x1b[0m ${err.message}`);
+      await mcp.close();
       process.exit(1);
     }
+    await mcp.close();
     process.exit(0);
   }
 
@@ -169,6 +185,7 @@ async function main() {
   }
 
   rl.close();
+  await mcp.close();
   process.exit(0);
 }
 

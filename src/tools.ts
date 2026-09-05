@@ -6,6 +6,8 @@ import type { ToolDefinition } from './model.ts';
 export interface Tool {
   definition: ToolDefinition;
   execute: (args: Record<string, any>) => Promise<string>;
+  source?: 'builtin' | 'mcp';
+  isReadOnly?: boolean;
 }
 
 function resolveSafePath(filePath: string): string {
@@ -16,7 +18,7 @@ function resolveSafePath(filePath: string): string {
 }
 
 // Safety printer: prints pending actions before executing with dimmed formatting
-function notifyAction(actionName: string, detail: string) {
+export function notifyAction(actionName: string, detail: string) {
   process.stdout.write(`\x1b[90m⚡ ${actionName} \x1b[38;5;248m${detail}\x1b[0m\n`);
 }
 
@@ -60,6 +62,8 @@ function findFilesByBasename(
 }
 
 export const readFileTool: Tool = {
+  source: 'builtin',
+  isReadOnly: true,
   definition: {
     type: 'function',
     function: {
@@ -119,6 +123,8 @@ export const readFileTool: Tool = {
 };
 
 export const writeFileTool: Tool = {
+  source: 'builtin',
+  isReadOnly: false,
   definition: {
     type: 'function',
     function: {
@@ -161,6 +167,8 @@ export const writeFileTool: Tool = {
 };
 
 export const editFileTool: Tool = {
+  source: 'builtin',
+  isReadOnly: false,
   definition: {
     type: 'function',
     function: {
@@ -218,6 +226,8 @@ export const editFileTool: Tool = {
 };
 
 export const runShellCommandTool: Tool = {
+  source: 'builtin',
+  isReadOnly: false,
   definition: {
     type: 'function',
     function: {
@@ -270,6 +280,8 @@ export const runShellCommandTool: Tool = {
 };
 
 export const searchFilesTool: Tool = {
+  source: 'builtin',
+  isReadOnly: true,
   definition: {
     type: 'function',
     function: {

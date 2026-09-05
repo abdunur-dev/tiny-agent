@@ -24,9 +24,16 @@ export const RISKY_TOOLS = new Set(['write_file', 'edit_file', 'run_shell_comman
 
 export function getActionConfirmation(
   toolName: string,
-  args: Record<string, any>
+  args: Record<string, any>,
+  tool?: Tool
 ): ActionConfirmation | null {
-  if (!RISKY_TOOLS.has(toolName)) {
+  // Safe built-in tools never require confirmation
+  if (toolName === 'read_file' || toolName === 'search_files') {
+    return null;
+  }
+
+  // Proven read-only tools never require confirmation
+  if (tool?.isReadOnly === true) {
     return null;
   }
 
@@ -72,7 +79,22 @@ export function getActionConfirmation(
     };
   }
 
-  return null;
+  // Any other tool (including MCP tools) requires confirmation unless proven read-only
+  const argKeys = Object.keys(args || {});
+  let preview: string | undefined;
+  if (argKeys.length > 0) {
+    preview = JSON.stringify(args, null, 2)
+      .split('\n')
+      .map((l) => `  ${l}`)
+      .join('\n');
+  }
+
+  return {
+    toolName,
+    args,
+    detail: `${toolName}${argKeys.length > 0 ? `: ${JSON.stringify(args)}` : ''}`,
+    preview,
+  };
 }
 
 export async function defaultTerminalConfirm(
@@ -190,8 +212,12 @@ export async function processAgentTurn(
 
     // If no tool calls were requested, turn is complete
     if (!response.tool_calls || response.tool_calls.length === 0) {
-      if (response.content) {
+      if (response.content && response.content.trim().length > 0) {
         ctx.history.push({ role: 'assistant', content: response.content });
+      } else {
+        process.stdout.write(
+          `\x1b[33m⚠ The model didn't return a response or take an action. Try rephrasing your request or breaking it into smaller steps.\x1b[0m\n`
+        );
       }
       break;
     }
@@ -218,7 +244,7 @@ export async function processAgentTurn(
           }
 
           // Check if this tool requires user confirmation
-          const confirmation = getActionConfirmation(call.function.name, args);
+          const confirmation = getActionConfirmation(call.function.name, args, tool);
           let isApproved = true;
 
           if (confirmation && !ctx.autoApprove) {

@@ -219,6 +219,50 @@ describe('Phase 1 Core Agent Loop', () => {
     expect(callCount).toBe(2);
     expect(outputTokens.join('')).toBe('Successfully read agent.ts');
   });
+
+  it('prints a clear warning and ends turn cleanly when model returns no tool calls and no content', async () => {
+    const originalWrite = process.stdout.write;
+    const stdoutChunks: string[] = [];
+    process.stdout.write = (chunk: any) => {
+      stdoutChunks.push(String(chunk));
+      return true;
+    };
+
+    let chatCalled = false;
+    const mockModel: ModelAdapter = {
+      async chat() {
+        chatCalled = true;
+        return {
+          content: null,
+          tool_calls: undefined,
+        };
+      },
+    };
+
+    const ctx: AgentContext = {
+      model: mockModel,
+      tools: [readFileTool],
+      history: [{ role: 'system', content: 'system prompt' }],
+    };
+
+    try {
+      await processAgentTurn(ctx, 'Perform a complex nested json edit', () => {});
+
+      expect(chatCalled).toBe(true);
+      const text = stdoutChunks.join('');
+      expect(text).toContain(
+        "⚠ The model didn't return a response or take an action. Try rephrasing your request or breaking it into smaller steps."
+      );
+      // Ensure user prompt was added, but no empty assistant message was appended
+      expect(ctx.history.length).toBe(2); // system, user
+      expect(ctx.history[1]).toEqual({
+        role: 'user',
+        content: 'Perform a complex nested json edit',
+      });
+    } finally {
+      process.stdout.write = originalWrite;
+    }
+  });
 });
 
 describe('Risky Actions Confirmation', () => {

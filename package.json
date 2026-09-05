@@ -14,5 +14,8 @@
   "devDependencies": {
     "@types/node": "^22.0.0",
     "bun-types": "latest"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.30.0"
   }
 }

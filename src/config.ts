@@ -10,10 +10,18 @@ export interface ProviderSettings {
   apiKey?: string;
 }
 
+export interface McpServerConfig {
+  command: string;
+  args?: string[];
+  env?: Record<string, string>;
+  cwd?: string;
+}
+
 export interface AgentConfig {
   defaultProvider: 'ollama' | 'groq';
   ollama: ProviderSettings;
   groq: ProviderSettings;
+  mcpServers?: Record<string, McpServerConfig>;
 }
 
 const CONFIG_DIR = path.join(os.homedir(), '.tiny-agent');
@@ -97,6 +105,7 @@ export async function resolveRuntimeConfig(cliArgs: string[]): Promise<{
   baseURL: string;
   model: string;
   apiKey?: string;
+  mcpServers?: Record<string, McpServerConfig>;
 }> {
   const forceLocal = cliArgs.includes('--local');
   const forceCloud = cliArgs.includes('--cloud');
@@ -145,5 +154,6 @@ export async function resolveRuntimeConfig(cliArgs: string[]): Promise<{
     baseURL: providerSettings.baseURL,
     model: modelOverride || providerSettings.model,
     apiKey,
+    mcpServers: config.mcpServers,
   };
 }
