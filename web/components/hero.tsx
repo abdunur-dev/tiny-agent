@@ -24,11 +24,6 @@ export function Hero() {
         {/* Left-Aligned Terminal Hero Content */}
         <div className="max-w-3xl flex flex-col items-start text-left">
           
-          {/* Subtle status tag (not an ALL-CAPS tracked out label) */}
-          <div className="inline-flex items-center gap-2 px-2.5 py-1 border border-[#262626] bg-[#121212] text-xs font-mono text-[#737373] mb-6">
-            <span className="w-1.5 h-1.5 bg-[#FAFAFA]" />
-            <span>v0.1.0 · open-source on bun</span>
-          </div>
 
           {/* Heading in Space Grotesk - bold, confident, unexpected scale */}
           <h1 className="font-heading text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-[#FAFAFA] mb-6 leading-[1.05]">

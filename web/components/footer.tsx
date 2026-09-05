@@ -16,7 +16,6 @@ export function Footer() {
             </div>
             <span className="text-xs font-semibold tracking-wider uppercase">tiny-agent</span>
           </Link>
-          <span className="text-[#737373] text-xs">v0.1.0 · open-source on bun</span>
         </div>
 
         <div className="h-px bg-[#262626] mb-10" />
